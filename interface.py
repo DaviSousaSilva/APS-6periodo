@@ -1,12 +1,13 @@
+import sys
 import tkinter as tk
 from tkinter import filedialog
- 
 import cv2
 from ultralytics import YOLO
- 
-modelo = YOLO("runs/detect/PIVC/weights/best.pt")
- 
- 
+
+caminho_modelo = sys.argv[1] if len(sys.argv) > 1 else "runs/detect/PIVC/weights/best.pt"
+modelo = YOLO(caminho_modelo)
+
+
 def carregar():
     caminhos = filedialog.askopenfilenames(
         title="Selecione as imagens",
@@ -17,15 +18,15 @@ def carregar():
         cv2.imshow("Resultado", resultados[0].plot())
         cv2.waitKey(0)
     cv2.destroyAllWindows()
- 
- 
+
+
 janela = tk.Tk()
 janela.title("PIVC")
- 
+
 texto = tk.Label(janela, text="Clique para carregar imagens")
 texto.pack(pady=10)
- 
+
 botao = tk.Button(janela, text="Carregar imagens", command=carregar)
 botao.pack(pady=10)
- 
+
 janela.mainloop()
